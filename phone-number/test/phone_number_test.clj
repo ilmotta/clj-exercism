@@ -31,9 +31,9 @@
 
 (deftest pretty-print
   (is (= "(123) 456-7890" (phone-number/pretty-print "1234567890"))))
-;; 
-;; (deftest pretty-print-with-dots
-;;   (is (= "(555) 867-5309" (phone-number/pretty-print "555.867.5309"))))
-;; 
-;; (deftest pretty-print-with-full-us-phone-number
-;;   (is (= "(987) 654-3210" (phone-number/pretty-print "19876543210"))))
+
+(deftest pretty-print-with-dots
+  (is (= "(555) 867-5309" (phone-number/pretty-print "555.867.5309"))))
+
+(deftest pretty-print-with-full-us-phone-number
+  (is (= "(987) 654-3210" (phone-number/pretty-print "19876543210"))))

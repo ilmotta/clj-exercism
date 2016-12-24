@@ -1,29 +1,24 @@
-(ns phone-number)
+(ns phone-number
+  (:require [clojure.string :as string]))
 
-(def invalid-phone
-  "0000000000")
-
-(defn as-phone
+(defn ^:private as-phone
   [input]
-  (let [numbers (clojure.string/replace input #"\D" "")]
+  (let [numbers (string/replace input #"\D" "")]
     (if (re-find #"^1*\d{10}$" numbers)
-      (clojure.string/replace (format "%11s" numbers) #"\s" "1")
+      (string/replace (format "%11s" numbers) #"\s" "1")
       "00000000000")))
 
-(def number
-  (comp #(subs % 1) as-phone))
+(def ^:private digit-groups
+  (juxt #(subs % 0 1) #(subs % 1 4) #(subs % 4 7) #(subs % 7)))
 
-;; (defn number2
-;;   [phone]
-;;   (let [s (only-numbers phone)]
-;;     (condp re-find s
-;;       #"^.{10}$" s
-;;       #"^1.{10}$" (subs s 1)
-;;       invalid-phone)))
+(def ^:private without-area
+  (comp rest digit-groups as-phone))
+
+(def number
+  (comp string/join without-area))
 
 (def area-code
-  (comp #(subs % 1 4) as-phone))
+  (comp second digit-groups as-phone))
 
-(defn pretty-print
-  [phone]
-  "")
+(def pretty-print
+  (comp (partial apply format "(%s) %s-%s") without-area))
