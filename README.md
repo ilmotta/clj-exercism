@@ -1,7 +1,7 @@
 # Exercism Exercises
 
-[exercism.io](exercism.io) has been very useful for learning Clojure so far.
-They are not excessively difficult, like the ones in [Ruby Quiz](rubyquiz.com)
+[exercism.io](http://exercism.io) has been very useful for learning Clojure so far.
+They are not excessively difficult, like the ones in [Ruby Quiz](http://rubyquiz.com)
 (which are great btw).
 
 Given the fact that each exercise comes with unit tests and that I'm
