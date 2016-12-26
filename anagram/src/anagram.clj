@@ -1,16 +1,11 @@
 (ns anagram
   (:require [clojure.string :refer [lower-case]]))
 
-(defn diff-insensitive
-  [a b]
-  (not= (lower-case a) (lower-case b)))
+(defn ^:private diff-words [& more]
+  (apply not= (map lower-case more)))
 
-(defn same-chars
-  [a b]
-  (= (sort (lower-case a)) (sort (lower-case b))))
+(defn ^:private same-chars [& more]
+  (apply = (map (comp sort lower-case) more)))
 
-(defn anagrams-for
-  [word coll]
-  (->> coll
-       (filter (partial diff-insensitive word))
-       (filter (partial same-chars word))))
+(defn anagrams-for [word suggestions]
+  (filter #(and (diff-words word %) (same-chars word %)) suggestions))
