@@ -8,8 +8,4 @@
 (defn pangram?
   ([s] (pangram? s us-alphabet))
   ([s alphabet]
-   (->> (string/lower-case s)
-        (filter alphabet)
-        set
-        (set/difference alphabet)
-        empty?)))
+   (set/subset? alphabet (set (string/lower-case s)))))
