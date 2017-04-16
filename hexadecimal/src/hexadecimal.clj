@@ -4,20 +4,16 @@
   (zipmap "0123456789abcdef" (range 16)))
 
 (defn hex? [s]
-  (every? (set (keys hex-table)) s))
-
-(defn build-addend [length index number]
-  [(- (- length 1) index) number])
+  (every? hex-table s))
 
 (defn resolve-addend [[exp factor]]
-  (* factor (Math/pow 16 exp)))
+  (-> (Math/pow 16 exp) (* factor) int))
 
 (defn hex-to-int [s]
   (if (hex? s)
-    (->> (seq s)
+    (->> (reverse s)
          (map hex-table)
-         (map-indexed (partial build-addend (count s)))
+         (map-indexed vector)
          (map resolve-addend)
-         (apply +)
-         int)
+         (apply +))
     0))
