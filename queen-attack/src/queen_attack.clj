@@ -19,6 +19,11 @@
 (defn board [queens]
   (map (partial board-row queens) (range 8)))
 
+;; I've completely separated the steps to build board data and to
+;; actually render it. In case I want to output to a different format
+;; (e.g. HTML, JSON) only the rendering functions below will need to
+;; change.
+
 (defn render-place [place]
   (get {:chess/white "W" :chess/black "B"} place "_"))
 
